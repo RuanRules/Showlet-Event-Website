@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Explore our events">
+    <title>Showlet | Events</title>
+    <link rel="stylesheet" href="css1.css">
+    <style>
+        .service-item .event-actions {
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        .service-item .book-now-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            font-size: 1rem;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1>Showlet</h1>
+            </div>
+            <nav class="main-navigation">
+                <ul>
+                    <li><a href="home.html">Home</a></li>
+                    <li><a href="login.html">User</a></li>
+                    <li><a href="events.html">Events</a></li>
+                    <li><a href="ticket.html">Book Now</a></li>
+                    <li><a href="php/history.php">History</a></li>
+                    <li><a href="csform.html">Contact</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+        <section class="page-header">
+            <div class="container">
+                <h1>The Events</h1>
+                <p>Discover today's Hottest events and shows.</p>
+            </div>
+        </section>
+
+        <section class="search-filter-section">
+            <div class="container">
+                <div class="filter-controls">
+                    <input type="text" id="searchInput" placeholder="Search for events...">
+                    <select id="sortOptions">
+                        <option value="default">Sort by</option>
+                        <option value="name-asc">Name (A-Z)</option>
+                        <option value="name-desc">Name (Z-A)</option>
+                        <option value="price-asc">Price (Low to High)</option>
+                        <option value="price-desc">Price (High to Low)</option>
+                    </select>
+                </div>
+            </div>
+        </section>
+
+        <section class="services-grid">
+            <div class="container">
+                <div class="services-list">
+                    <article class="service-item" data-event-name="Tyla @Grandwest" data-event-price="250">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🎤</div>
+                            </div>
+                            <figcaption>Tyla @Grandwest</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Tyla @Grandwest</h2>
+                            <p>The one and only, Tyla performing her latest album @ Grand West</p>
+                            <ul>
+                                <li>For Ages 16+</li>
+                                <li>Experience the global sensation Tyla live at GrandWest for an unforgettable night of music, dance, and pure energy.</li>
+                                <li>With her chart-topping hits and captivating stage presence, Tyla brings a fresh and vibrant performance you don’t want to miss.</li>
+                                <li>Join fans from across the country for an electrifying evening celebrating one of South Africa’s brightest stars.</li>
+                                <li>Price: R250</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Tyla @Grandwest" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="service-item" data-event-name="Cape Town Car Spinning" data-event-price="100">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🚗</div>
+                            </div>
+                            <figcaption>Cape Town Car Spinning</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Cape Town Car Spinning</h2>
+                            <p></p>
+                            <ul>
+                                <li>For All Ages</li>
+                                <li>Feel the adrenaline at Cape Town Car Spinning, where powerful engines, screeching tires, and daring stunts come alive.</li>
+                                <li>Watch top local spinners push their skills to the limit in a thrilling showcase of control and chaos.</li>
+                                <li>This is the ultimate motorsport experience for speed lovers and thrill-seekers alike.</li>
+                                <li>Price: R100</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Cape Town Car Spinning" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="service-item" data-event-name="Art Day @Museum" data-event-price="150">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🎨</div>
+                            </div>
+                            <figcaption>Art Day @Museum</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Art Day @Museum</h2>
+                            <p></p>
+                            <ul>
+                                <li>For All Ages</li>
+                                <li>Celebrate creativity and culture at Art Day @ Museum, a day dedicated to artistic expression and inspiration.</li>
+                                <li>Explore captivating exhibitions, interactive workshops, and live demonstrations by local artists.</li>
+                                <li>Whether you're an art enthusiast or just curious, this event offers something beautiful for everyone to enjoy.</li>
+                                <li>Price: R150</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Art Day @Museum" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="service-item" data-event-name="Bulls VS Sharks" data-event-price="75">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🏉</div>
+                            </div>
+                            <figcaption>Bulls VS Sharks</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Bulls VS Sharks</h2>
+                            <p></p>
+                            <ul>
+                                <li>For All Ages</li>
+                                <li>Get ready for a clash of titans as the Bulls take on the Sharks in a high-stakes rugby showdown.</li>
+                                <li>Expect hard tackles, fast-paced action, and intense rivalry as two of South Africa’s top teams battle it out for victory.</li>
+                                <li>This is more than just a match — it’s a war for pride, passion, and provincial glory.</li>
+                                <li>Price: R75</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Bulls VS Sharks" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="service-item" data-event-name="Peppa Pig on Ice" data-event-price="50">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🐷</div>
+                            </div>
+                            <figcaption>Peppa Pig on Ice</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Peppa Pig on Ice</h2>
+                            <p></p>
+                            <ul>
+                                <li>For All Ages</li>
+                                <li>Join Peppa Pig and her friends for a magical adventure in Peppa Pig on Ice, a fun-filled show for the whole family.</li>
+                                <li>Watch your favourite characters come to life with dazzling costumes, delightful music, and graceful skating.</li>
+                                <li>It’s the perfect day out for young fans and parents alike — full of laughter, excitement, and unforgettable moments.</li>
+                                <li>Price: R50</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Peppa Pig on Ice" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+
+                    <article class="service-item" data-event-name="Jazz on the Rocks" data-event-price="125">
+                        <figure class="service-image">
+                            <div class="service-icon">
+                                <div class="icon-placeholder">🎷</div>
+                            </div>
+                            <figcaption>Jazz on the Rocks</figcaption>
+                        </figure>
+                        <div class="service-details">
+                            <h2>Jazz on the Rocks</h2>
+                            <p></p>
+                            <ul>
+                                <li>For All Ages</li>
+                                <li>Immerse yourself in the smooth sounds of Jazz on the Rocks, where world-class musicians meet breathtaking coastal scenery.</li>
+                                <li>Set against the backdrop of the ocean, this unique festival blends soulful jazz with the relaxing rhythm of nature.</li>
+                                <li>It’s the perfect escape for music lovers seeking good vibes, great company, and unforgettable sunsets.</li>
+                                <li>Price: R125</li>
+                            </ul>
+                            <div class="event-actions">
+                                <a href="ticket.html?event=Jazz on the Rocks" class="btn btn-primary book-now-btn">Book Now</a>
+                            </div>
+                        </div>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <section class="cta-section">
+            <div class="container">
+                <h2>Need Help Picking an Event?</h2>
+                <p>We work closely with our clients to tailor to your needs</p>
+                <a href="csform.html" class="btn btn-primary">Discuss Your Problem</a>
+            </div>
+        </section>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Showlet</h2>
+                    <p>Crafting memorable brand experiences</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+                        <li><a href="home.html">Home</a></li>
+                        <li><a href="login.html">User</a></li>
+                        <li><a href="events.html">Events</a></li>
+                        <li><a href="ticket.html">Book Now</a></li>
+                        <li><a href="php/history.php">History</a></li>
+                        <li><a href="csform.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p>1 Albert Rd, Woodstock, Cape Town, 7525</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Email: CDS@gmail.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Showlet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const searchInput = document.getElementById('searchInput');
+            const sortOptions = document.getElementById('sortOptions');
+            const servicesList = document.querySelector('.services-list');
+            const serviceItems = Array.from(servicesList.querySelectorAll('.service-item'));
+
+            // --- SEARCH FUNCTION ---
+            searchInput.addEventListener('keyup', function (e) {
+                const searchTerm = e.target.value.toLowerCase();
+
+                serviceItems.forEach(item => {
+                    const eventName = item.dataset.eventName.toLowerCase();
+                    if (eventName.includes(searchTerm)) {
+                        item.style.display = 'grid';
+                    } else {
+                        item.style.display = 'none';
+                    }
+                });
+            });
+
+            // --- SORT FUNCTION ---
+            sortOptions.addEventListener('change', function (e) {
+                const sortValue = e.target.value;
+
+                const sortedItems = serviceItems.sort((a, b) => {
+                    const nameA = a.dataset.eventName.toLowerCase();
+                    const nameB = b.dataset.eventName.toLowerCase();
+                    const priceA = parseFloat(a.dataset.eventPrice);
+                    const priceB = parseFloat(b.dataset.eventPrice);
+
+                    switch (sortValue) {
+                        case 'price-asc':
+                            return priceA - priceB;
+                        case 'price-desc':
+                            return priceB - priceA;
+                        case 'name-asc':
+                            return nameA.localeCompare(nameB);
+                        case 'name-desc':
+                            return nameB.localeCompare(nameA);
+                        default:
+                            return 0; // No change for "default"
+                    }
+                });
+
+                // Re-append sorted items to the list
+                servicesList.innerHTML = ''; 
+                sortedItems.forEach(item => {
+                    servicesList.appendChild(item);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

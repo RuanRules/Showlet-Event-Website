@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Book your tickets for Showlet events.">
+    <title>Showlet | Booking</title>
+    <link rel="stylesheet" href="css1.css">
+    <!-- CDN for jsPDF library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <!-- LOCAL qrcode.js library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+</head>
+<body>
+    <header class="site-header">
+        <div class="container">
+            <div class="logo">
+                <h1>Showlet</h1>
+            </div>
+            <nav class="main-navigation">
+    <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="login.html">User</a></li> <li><a href="events.html">Events</a></li>
+        <li><a href="ticket.html">Book Now</a></li>
+        <li><a href="php/history.php">History</a></li> <li><a href="csform.html">Contact</a></li>
+    </ul>
+</nav>
+        </div>
+    </header>
+
+    <main class="booking-page-content">
+        <div class="booking-container">
+            <h2>Book Your Event Tickets</h2>
+            <form id="bookingForm" class="booking-form">
+                <div class="form-group">
+                    <label for="event-select">Select an Event</label>
+                    <select id="event-select" name="event" required>
+                        <option value="">-- Please choose an event --</option>
+                        <!-- Options will be dynamically populated by JavaScript -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="num-tickets">Number of Tickets</label>
+                    <input type="number" id="num-tickets" name="num_tickets" min="1" value="1" required>
+                </div>
+                <div class="form-submit">
+                    <button type="submit" class="btn btn-primary">Buy / Book Now</button>
+                </div>
+            </form>
+
+            <!-- Placeholder for QR code (hidden until generated) -->
+            <div id="qrcode-container"></div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-logo">
+                    <h2>Showlet</h2>
+                    <p>Crafting memorable brand experiences</p>
+                </div>
+                <div class="footer-links">
+                    <h3>Quick Links</h3>
+                    <ul>
+        <li><a href="home.html">Home</a></li>
+        <li><a href="login.html">User</a></li> <li><a href="events.html">Events</a></li>
+        <li><a href="ticket.html">Book Now</a></li>
+        <li><a href="php/history.php">History</a></li> <li><a href="csform.html">Contact</a></li>
+                    </ul>
+                </div>
+                <div class="footer-contact">
+                    <h3>Contact Us</h3>
+                    <p>1 Albert Rd, Woodstock, Cape Town, 7525</p>
+                    <p>Phone: (123) 456-7890</p>
+                    <p>Email: CDS@gmail.com</p>
+                </div>
+            </div>
+            <div class="copyright">
+                <p>&copy; 2023 Showlet. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Modal for messages (instead of alert) -->
+    <div id="messageModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close-btn">&times;</span>
+            <h3 id="modalTitle"></h3>
+            <p id="modalMessage"></p>
+            <button class="btn btn-primary" onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+<script>
+    // Function to show custom modal messages
+    function showModal(title, message) {
+        document.getElementById('modalTitle').innerText = title;
+        document.getElementById('modalMessage').innerText = message;
+        document.getElementById('messageModal').style.display = 'flex'; 
+    }
+
+    // Function to close the custom modal
+    function closeModal() {
+        document.getElementById('messageModal').style.display = 'none';
+    }
+
+    // Close modal when clicking on the 'x'
+    document.querySelector('.modal-close-btn').onclick = closeModal;
+
+    // Close modal when clicking outside of the modal content
+    window.onclick = function(event) {
+        const modal = document.getElementById('messageModal');
+        if (event.target == modal) {
+            closeModal();
+        }
+    }
+
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const eventSelect = document.getElementById('event-select');
+        const bookingForm = document.getElementById('bookingForm');
+        const qrcodeContainer = document.getElementById('qrcode-container');
+
+        // Define events data (could be fetched from a server in a real app)
+        const events = [
+            { name: "Tyla @Grandwest", price: 250 },
+            { name: "Cape Town Car Spinning", price: 100 },
+            { name: "Art Day @Museum", price: 150 },
+            { name: "Bulls VS Sharks", price: 75 },
+            { name: "Peppa Pig on Ice", price: 50 },
+            { name: "Jazz on the Rocks", price: 125 }
+        ];
+
+        // Populate the event dropdown
+        events.forEach(event => {
+            const option = document.createElement('option');
+            option.value = event.name;
+            option.textContent = event.name;
+            eventSelect.appendChild(option);
+        });
+
+        // Pre-select event if passed via URL parameter
+        const urlParams = new URLSearchParams(window.location.search);
+        const preselectedEvent = urlParams.get('event');
+        if (preselectedEvent) {
+            eventSelect.value = preselectedEvent;
+        }
+
+        bookingForm.addEventListener('submit', function(e) {
+            e.preventDefault(); // Prevent default form submission
+
+            const selectedEvent = eventSelect.value;
+            const numTickets = document.getElementById('num-tickets').value;
+
+            if (!selectedEvent) {
+                showModal('Selection Error', 'Please select an event before booking.');
+                console.error('No event selected.');
+                return;
+            }
+            if (numTickets <= 0) {
+                showModal('Quantity Error', 'Please enter a valid number of tickets.');
+                console.error('Invalid number of tickets:', numTickets);
+                return;
+            }
+
+            const bookingDateTime = new Date().toLocaleString();
+            const uniqueId = 'BOOK-' + Date.now() + '-' + Math.floor(Math.random() * 10000); // Simple unique ID
+
+            // Clear previous QR code
+            qrcodeContainer.innerHTML = '';
+            // qrcodeContainer.style.display = 'block'; // Keep display as block for debugging now. Remove this line later.
+
+            console.log('Attempting to generate QR Code for:', {
+                event: selectedEvent,
+                tickets: numTickets,
+                dateTime: bookingDateTime,
+                id: uniqueId
+            });
+
+            // Check if QRCode is defined before trying to use it
+            if (typeof QRCode === 'undefined') {
+                console.error('QRCode library is not defined. It might not have loaded correctly.');
+                showModal('Error', 'QR code generation library failed to load. Please try again.');
+                return;
+            }
+
+            try {
+                // Generate QR Code
+                const qrCodeSize = 150;
+                const qr = new QRCode(qrcodeContainer, {
+                    text: `Event: ${selectedEvent}\nTickets: ${numTickets}\nDate: ${bookingDateTime}\nBooking ID: ${uniqueId}`,
+                    width: qrCodeSize,
+                    height: qrCodeSize,
+                    colorDark : "#000000",
+                    colorLight : "#ffffff",
+                    correctLevel : QRCode.CorrectLevel.H
+                });
+                console.log('QR Code instance created.');
+
+                // Allow some time for QR code to render, then generate PDF
+                // Increased delay for better reliability.
+                setTimeout(() => {
+                    let qrCodeDataURL = '';
+                    const imgElement = qrcodeContainer.querySelector('img');
+                    const canvasElement = qrcodeContainer.querySelector('canvas');
+
+                    if (imgElement && imgElement.src) {
+                        qrCodeDataURL = imgElement.src;
+                        console.log('QR Code rendered as IMG. Data URL length:', qrCodeDataURL.length);
+                    } else if (canvasElement) {
+                        try {
+                            qrCodeDataURL = canvasElement.toDataURL('image/png');
+                            console.log('QR Code rendered as CANVAS. Data URL length:', qrCodeDataURL.length);
+                        } catch (canvasError) {
+                            console.error('Error converting canvas to Data URL:', canvasError);
+                            showModal('Error', 'Could not capture QR code image for PDF. Check console for details.');
+                            return;
+                        }
+                    } else {
+                        console.error('QR Code element (img or canvas) not found in container after timeout.');
+                        showModal('Error', 'QR code image could not be generated. Please try again.');
+                        return;
+                    }
+
+                    if (!qrCodeDataURL) {
+                        console.error('QR Code Data URL is empty.');
+                        showModal('Error', 'QR code image data is empty. Cannot generate PDF.');
+                        return;
+                    }
+
+                    // Initialize jsPDF
+                    try {
+                        const { jsPDF } = window.jspdf;
+                        const doc = new jsPDF();
+
+                        // Set font and size for title
+                        doc.setFontSize(24);
+                        doc.setTextColor(0, 102, 204); 
+                        doc.text("Event Ticket Confirmation", doc.internal.pageSize.width / 2, 20, { align: "center" });
+
+                        // Add a line separator
+                        doc.setDrawColor(0, 102, 204);
+                        doc.line(20, 25, doc.internal.pageSize.width - 20, 25);
+
+                        // Set font and size for details
+                        doc.setFontSize(14);
+                        doc.setTextColor(51, 51, 51); // Dark grey
+
+                        doc.text(`Event: ${selectedEvent}`, 20, 40);
+                        doc.text(`Number of Tickets: ${numTickets}`, 20, 50);
+                        doc.text(`Booking Date & Time: ${bookingDateTime}`, 20, 60);
+                        doc.text(`Booking ID: ${uniqueId}`, 20, 70);
+
+                        // Add QR code to PDF
+                        const qrCodeWidth = 50; 
+                        const qrCodeHeight = 50;
+                        const xPos = (doc.internal.pageSize.width - qrCodeWidth) / 2;
+                        const yPos = 85; 
+
+                        doc.addImage(qrCodeDataURL, 'PNG', xPos, yPos, qrCodeWidth, qrCodeHeight);
+                        doc.setFontSize(10);
+                        doc.setTextColor(100, 100, 100);
+                        doc.text("Scan this QR code for entry", doc.internal.pageSize.width / 2, yPos + qrCodeHeight + 10, { align: "center" });
+
+
+                        // Save the PDF
+                        doc.save(`Ticket_${selectedEvent.replace(/[^a-zA-Z0-9]/g, '_')}_${uniqueId}.pdf`);
+                        console.log('PDF generation and download initiated.');
+
+                        showModal('Booking Confirmed!', `Your ticket for "${selectedEvent}" has been booked. A PDF with your QR code is downloading.`);
+
+                        // Optionally, clear the form or redirect
+                        bookingForm.reset();
+                        qrcodeContainer.innerHTML = ''; 
+                        // qrcodeContainer.style.display = 'none'; // Re-hide QR code container after debugging
+                    } catch (pdfError) {
+                        console.error('Error during PDF generation:', pdfError);
+                        showModal('PDF Error', 'Failed to generate PDF ticket. Check console for details.');
+                    }
+                }, 500); // Increased delay to 500ms
+            } catch (qrCodeInitError) {
+                console.error('Error initializing QRCode:', qrCodeInitError);
+                showModal('QR Code Initialization Error', 'There was an issue setting up QR code generation. Check console for details.');
+            }
+        });
+    });
+</script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script></body>
+</html>
